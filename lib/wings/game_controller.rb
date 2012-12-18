@@ -23,23 +23,33 @@ module Wings
       # invoke action
       #action_name.call(*args)
       old_instance_variables = instance_variables
+
+      # invoke action
       send action_name, *args
+
+      return if render_interrupted?
+
       new_instance_variables = instance_variables
-      instance_variables_delta = new_instance_variables
+      instance_variables_delta = new_instance_variables - old_instance_variables
 
       puts "--- created several instance variables!"
+      puts instance_variables_delta.join(", ")
 
       view_name = action_name.to_s
 
       # implicit render (i.e., unless we were told otherwise)
-      unless view = view_for_action(view_name)
+      unless view_for_action(view_name)
         raise "The view '#{view_name}' could not be found for #{self.class.name}"
       end
 
-      # this is incredibly messsy!
+      # seems incredibly messsy!
+      view = view_for_action(view_name)
 
-      render_view(view_name) unless render_interrupted?
+      instance_variables_delta.each do |variable|
+        view.instance_variable_set(variable, self.send(variable))
+      end
 
+      view.render
     end
 
     def render_view(view_name, opts={})
@@ -68,7 +78,6 @@ module Wings
     def method_for_action(action_name)
       actions.select { |action| action.name == action_name }
     end
-
 
     def self.inherited(subclass)
       puts "New subclass of game_controller: #{subclass}"
