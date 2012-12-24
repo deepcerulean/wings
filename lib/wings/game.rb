@@ -9,7 +9,7 @@ module Wings
     end
 
     def launch!(opts={})
-      puts "=== running in environment: #{@environment}"
+      #puts "=== running in environment: #{@environment}"
 
       load_resources!
       handle(:launch)
@@ -20,15 +20,16 @@ module Wings
     end
 
     def activate(controller, action, *args)
-      puts "--- activating controller #{controller} action #{action}"
+      #puts "--- activating controller #{controller} action #{action}"
       @@current_controller = controller.new
-      puts "--- assigned current controller! #{@@current_controller}"
+      #puts "--- assigned current controller! #{@@current_controller}"
       @@current_controller.process(action, *args)
     end
 
 
     def load_resources!
-      puts "=== load resources"
+      #puts "=== load resources"
+      require("#{self.class.root}/config/env/#{@environment}")
       Find.find("#{self.class.root}/game") do |path|
         next if FileTest.directory?(path)
         require(path) if File.basename(path).include?('.rb')
