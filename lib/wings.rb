@@ -17,17 +17,17 @@ module Wings
   # Your code goes here...
   def self.play(game, init_opts={}, game_opts={})
     #puts "--- starting game #{game}"
-    @@active_game = game.new(init_opts)
+    @active_game = game.new(init_opts)
     #puts "--- current game: #{@@active_game}"
-    @@active_game.launch!(game_opts)
-    @@active_game
+    @active_game.launch!(game_opts)
+    @active_game
   end
 
   def self.active_game
-    @@active_game ||= nil
+    @active_game ||= nil
   end
 
-  def self.view_engine
-    @@view_engine ||= nil
-  end
+  def self.view_engine; @view_engine end
+  def self.view_engine= v; @view_engine = v end
+
 end
