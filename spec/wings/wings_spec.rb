@@ -1,21 +1,17 @@
-require 'rspec'
-require 'wings'
-
-
-####
-
-
-
+require 'spec_helper'
 
 describe Wings do
+  let(:game)  do
+    ExampleGame.play!(environment: 'test')
+  end
+
   before(:each) do
-    ExampleGame.start(environment: 'drydock')
+    puts game
   end
 
   it "is an awesome framework" do
-    #fail 'insufficient awesomeness quotient'
-
-    ExampleModel.any_instance.should_receive :click
-    ExampleGame.click(at: [4,5])
+    #Spaceship.all.should_not be_empty
+    Spaceship.any_instance.should_receive :click
+    game.click(at: Spaceship.first.position)
   end
 end

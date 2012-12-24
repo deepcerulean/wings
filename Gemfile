@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gem 'gosu'
 
-group :test do
+group :test, :development do
+  gem 'rake'
+  gem 'reek'
   gem 'rspec'
 end
 
