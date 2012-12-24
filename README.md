@@ -1,5 +1,7 @@
 # Wings
 
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/deepcerulean/wings)
+
 Some notes on the thought here.
 
 Wings is going to eventually live on a server and push update-deltas out to clients. Something like minotaur could be running on top, 'housing'
